@@ -27,7 +27,7 @@ namespace BML_Mock_App
     public partial class MainWindow : Window
     {
 
-         
+
         public string url = @"https://www.bankofmaldives.com.mv/internetbanking/api/login";
         public MainWindow()
         {
@@ -39,20 +39,24 @@ namespace BML_Mock_App
         internal static MainWindow main;
         internal int LoginDone
         {
-            set { Dispatcher.Invoke(new Action(() => {
-                loginview.Visibility = Visibility.Hidden;
-                ContactCard[] Card = new ContactCard[Lib_BML.Statics.contactsList.Length];
-                for (int i = 0; i < Lib_BML.Statics.contactsList.Length; i++)
+            set
+            {
+                Dispatcher.Invoke(new Action(() =>
                 {
-                    Card[i] = new ContactCard
+                    loginview.Visibility = Visibility.Hidden;
+                    ContactCard[] Card = new ContactCard[Lib_BML.Statics.contactsList.Length];
+                    for (int i = 0; i < Lib_BML.Statics.contactsList.Length; i++)
                     {
-                        HolderNames = Lib_BML.Statics.contactsList[i].Alias,
-                        AccountNumber = Lib_BML.Statics.contactsList[i].Account
-                    };
-                }
-                contact_list.ItemsSource = Card;
-                contact_list.Visibility = Visibility.Visible;
-            })); }
+                        Card[i] = new ContactCard
+                        {
+                            HolderNames = Lib_BML.Statics.contactsList[i].Alias,
+                            AccountNumber = Lib_BML.Statics.contactsList[i].Account
+                        };
+                    }
+                    contact_list.ItemsSource = Card;
+                    contact_list.Visibility = Visibility.Visible;
+                }));
+            }
         }
 
         #endregion

@@ -13,7 +13,13 @@ namespace Lib_BML
 {
     public class Login
     {
-        public static async Task<bool> DoLogin(string username, string password)
+        /// <summary>
+        /// Attempts to login to bml and return the status 
+        /// </summary>
+        /// <param name="username">BML Username</param>
+        /// <param name="password">BML Password</param>
+        /// <returns>respons statuus code</returns>
+        public static async Task<ResponseCode.Code> DoLogin(string username, string password)
         {
             var formContent = new FormUrlEncodedContent(new[]
             {
@@ -28,7 +34,9 @@ namespace Lib_BML
             var responseJson = await responseMessage.Content.ReadAsStringAsync();
             formContent.Dispose();
             var jObject = JObject.Parse(responseJson);
-            return jObject.GetValue("success").ToString().ToBoolean();
+
+            return (ResponseCode.Code)jObject.GetValue("code").ToString().ToInt32();
+            //return jObject.GetValue("code").ToString().ToBoolean();
 
         }
     }

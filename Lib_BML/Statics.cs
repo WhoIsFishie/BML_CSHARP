@@ -20,6 +20,8 @@ namespace Lib_BML
 
         public static ContactsList[] contactsList;
 
+        public static ActivitiesList activitiesList;
+
 
         public static class UserData{
             public static string Email;

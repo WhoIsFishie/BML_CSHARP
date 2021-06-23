@@ -109,6 +109,10 @@ namespace Lib_BML
         public enum Status { S };
         #endregion
 
+        /// <summary>
+        /// gets all the contacts in contacts list and adds it to Lib_BML.Statics.contactsList
+        /// </summary>
+        /// <returns></returns>
         public static async Task GetContats()
         {
             HttpResponseMessage contactsInfoMessage = await httpClient.GetAsync(@"https://www.bankofmaldives.com.mv/internetbanking/api/contacts");

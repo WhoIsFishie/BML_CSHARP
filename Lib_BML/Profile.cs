@@ -12,6 +12,11 @@ namespace Lib_BML
 {
     public class Profile
     {
+        /// <summary>
+        /// Gets User Info
+        /// Lib_BML.Statics.UserData
+        /// </summary>
+        /// <returns></returns>
         public static async Task GetUserInfoAsync()
         {
             //ping profile api so userinfo is allowed

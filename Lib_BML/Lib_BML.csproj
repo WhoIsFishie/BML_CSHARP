@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Activities.cs" />
     <Compile Include="Contacts.cs" />
+    <Compile Include="Helpers\ResponseCode.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Profile.cs" />
