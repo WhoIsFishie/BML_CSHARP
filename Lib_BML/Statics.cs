@@ -6,6 +6,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static Lib_BML.Activities;
+using static Lib_BML.Dashboard;
 using static Lib_BML.Contacts;
 
 namespace Lib_BML
@@ -22,6 +24,7 @@ namespace Lib_BML
 
         public static ActivitiesList activitiesList;
 
+        public static DashboardClass dashboardClass;
 
         public static class UserData{
             public static string Email;

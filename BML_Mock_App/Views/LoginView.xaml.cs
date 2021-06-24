@@ -57,8 +57,9 @@ namespace BML_Mock_App.Views
         //make a popup saying users name
         private async void ShowDetailsAsync()
         {
-            MessageBox.Show("Welcome "+Lib_BML.Statics.UserData.FullName);
-            await Lib_BML.Activities.GetActivities();
+            //MessageBox.Show("Welcome "+Lib_BML.Statics.UserData.FullName);
+            //await Lib_BML.Activities.GetActivities();
+            await Lib_BML.Dashboard.GetDashboard();
             MainWindow.main.LoginDone = 1;
         }
     }
