@@ -18,6 +18,34 @@ IN NO WAY SHAPE OR FORM IS THE BML MOCK APP TO BE USED AS A BML CLIENT AS IT DOE
 
 
 # how to use
-bool result = await Lib_BML.Login.DoLogin(username, password);
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //try to login and get login result
+            Lib_BML.Helpers.ResponseCode.Code result = await Lib_BML.Login.DoLogin(BML_USERNAME, BML_PASSWORD);
+
+            switch (result)
+            {
+                case Lib_BML.Helpers.ResponseCode.Code.success:
+                    await Lib_BML.Profile.GetUserInfoAsync(); //if login true check for user details 
+                    
+                    ////////////////////////////////////
+                    ///do whatever you want from here///
+                    ///////////////////////////////////
+                    
+                    break;
+                case Lib_BML.Helpers.ResponseCode.Code.fail:
+                    MessageBox.Show("Invalid Login");
+                    break;
+                case Lib_BML.Helpers.ResponseCode.Code.locked:
+                    MessageBox.Show("Account Locked");
+                    break;
+                case Lib_BML.Helpers.ResponseCode.Code.maintenance:
+                    MessageBox.Show("Down for maintenance");
+                    break;
+                default:
+                    break;
+            }
+        }
 
 https://write.mv/fishie-posting/making-my-own-bml-app
