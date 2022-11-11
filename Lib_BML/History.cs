@@ -309,7 +309,12 @@ namespace Lib_BML
             return ResponseCode.Code.accountIDIssue;
         }
 
-        public static async Task<(ResponseCode.Code, ObservableCollection<HistoryObject>)> GetAccountHistory(string id, string startDate, string endDate, int page = 1)
+        public static async Task<(ResponseCode.Code, List<StatementModel.History>)> GetAccountHistory(string id, DateTime startDate, DateTime endDate, int page = 1)
+        {  
+            return await GetAccountHistory(id, startDate.ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"), page);
+        }
+
+        public static async Task<(ResponseCode.Code, List<StatementModel.History>)> GetAccountHistory(string id, string startDate, string endDate, int page = 1)
         {
             HttpResponseMessage accountHistoryInfoMessageInfoMessage = await httpClient.GetAsync(BaseURL + $@"account/{id}/{startDate}/{endDate}/{page}");
             string accountHistoryInfoJson = await accountHistoryInfoMessageInfoMessage.Content.ReadAsStringAsync();
@@ -321,44 +326,42 @@ namespace Lib_BML
                 return (response.code, null);
             }
 
-            //instead of removing items from the list new method is to
-            //make a copy and add items to the list and assign it to view
-            AccountHistory copy = new AccountHistory();
-
-
-
-            ResponseCode.Code responseCode = (ResponseCode.Code)m.code;
-
-            if (responseCode != ResponseCode.Code.success)
-            {
-                return (responseCode, null);
-            }
-            copy.payload.history = new ObservableCollection<HistoryObject>();
-
-            foreach (var item in m.payload.history)
-            {
-                try
-                {
-                    copy.payload.history.Add(item);
-                }
-                catch
-                {
-
-                }
-            }
-
-            //var n = m.payload.history;
-            //var b = Enumerable.Reverse(n);
-
-            //m.payload.history = (ObservableCollection<HistoryObject>)b;
-
-            Lib_BML.Statics.accountHistory = copy;
-            return (responseCode, response.payload.history);
+            return (response.code, response.payload.history);
         }
 
-        //public static async Task<ResponseCode.Code> GetFullHistory(string id,string startDate,string endDate)
-        //{
+        public static async Task<(ResponseCode.Code, List<StatementModel.History>)> GetFullHistory(string id, DateTime startDate, DateTime endDate)
+        {
+            return await GetFullHistory(id, startDate.ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"));
+        }
 
-        //}
+        public static async Task<(ResponseCode.Code, List<StatementModel.History>)> GetFullHistory(string id,string startDate,string endDate)
+        {
+            HttpResponseMessage accountHistoryInfoMessageInfoMessage = await httpClient.GetAsync(BaseURL + $@"account/{id}/{startDate}/{endDate}/1");
+            string accountHistoryInfoJson = await accountHistoryInfoMessageInfoMessage.Content.ReadAsStringAsync();
+            //quick and dirty hack to remove some items
+            StatementModel response = JsonConvert.DeserializeObject<StatementModel>(accountHistoryInfoJson);
+
+            if (response.code != ResponseCode.Code.success)
+            {
+                return (response.code, null);
+            }
+            
+            List<StatementModel.History> Fullhistory = new List<StatementModel.History>();
+
+            for (int i = 2; i < response.payload.totalPages; i++)
+            {
+                (var code, var history) = await GetAccountHistory(id,startDate,endDate,i);
+
+                if(code != ResponseCode.Code.success)
+                {
+                    return (code, null);
+                }
+
+                Fullhistory = ListHelper.Concat(Fullhistory, history);
+
+            }
+
+            return (ResponseCode.Code.success, Fullhistory);
+        }
     }
 }

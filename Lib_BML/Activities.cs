@@ -454,22 +454,22 @@ namespace Lib_BML
             string ActivitiesInfoJson = await ActivitiesInfoMessage.Content.ReadAsStringAsync();
             JObject jObject = JObject.Parse(ActivitiesInfoJson);
             var n = jObject.GetValue("success").Value<string>();
-            if(n.ToLower() == "false")
+            if(n.ToLower() != "false")
             {
+                var Activitieslist = jObject.SelectToken("payload").SelectToken("content").ToString();
 
+                ActivitiesList temp = JsonConvert.DeserializeObject<ActivitiesList>(Activitieslist);
+                activitiesList.LastPage = temp.LastPage;
+                activitiesList.LastPageUrl = temp.LastPageUrl;
+
+                foreach (var item in temp.Data)
+                {
+                    activitiesList.Data.Add(item);
+                }
+
+                Console.WriteLine(Lib_BML.Statics.activitiesList.LastPageUrl);
             }
-            var Activitieslist = jObject.SelectToken("payload").SelectToken("content").ToString();
 
-            ActivitiesList temp = JsonConvert.DeserializeObject<ActivitiesList>(Activitieslist);
-            activitiesList.LastPage = temp.LastPage;
-            activitiesList.LastPageUrl = temp.LastPageUrl;
-
-            foreach (var item in temp.Data)
-            {
-                activitiesList.Data.Add(item);
-            }
-
-            Console.WriteLine(Lib_BML.Statics.activitiesList.LastPageUrl);
         }
 
         /// <summary>

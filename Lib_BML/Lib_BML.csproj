@@ -47,6 +47,7 @@
     <Compile Include="Activities.cs" />
     <Compile Include="Contacts.cs" />
     <Compile Include="Dashboard.cs" />
+    <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Helpers\OTPChannel.cs" />
     <Compile Include="Helpers\ResponseCode.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
