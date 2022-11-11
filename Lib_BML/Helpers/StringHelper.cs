@@ -15,6 +15,11 @@ namespace Lib_BML.Helpers
             return number;
         }
 
+        public static string RemoveFirstAndLastChar (this string value)
+        {
+          return value.Substring(1, value.Length - 2);
+        }
+
         public static bool ToBoolean(this string value)
         {
             if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))

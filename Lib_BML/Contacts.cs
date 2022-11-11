@@ -15,7 +15,7 @@ namespace Lib_BML
    public class Contacts
     {
         #region Creating classes for json
-        public partial class ContactsList
+        public class ContactsList
         {
             [JsonProperty("id")]
             public long Id { get; set; }
@@ -54,7 +54,7 @@ namespace Lib_BML
             public object Country { get; set; }
 
             [JsonProperty("contact_type")]
-            public ContactType ContactType { get; set; }
+            public string ContactType { get; set; }
 
             [JsonProperty("merchant")]
             public object Merchant { get; set; }
@@ -84,7 +84,7 @@ namespace Lib_BML
             public string Alias { get; set; }
 
             [JsonProperty("status")]
-            public Status Status { get; set; }
+            public string Status { get; set; }
 
             [JsonProperty("inputter")]
             public long? Inputter { get; set; }
@@ -102,11 +102,7 @@ namespace Lib_BML
             public object Vendor { get; set; }
         }
 
-        public enum ContactType { Iat };
-
         public enum Currency { Mvr, Usd };
-
-        public enum Status { S };
         #endregion
 
         /// <summary>
@@ -115,13 +111,27 @@ namespace Lib_BML
         /// <returns></returns>
         public static async Task GetContats()
         {
-            HttpResponseMessage contactsInfoMessage = await httpClient.GetAsync(@"https://www.bankofmaldives.com.mv/internetbanking/api/contacts");
+            HttpResponseMessage contactsInfoMessage = await httpClient.GetAsync(BaseURL + @"contacts");
             string contactsInfoJson = await contactsInfoMessage.Content.ReadAsStringAsync();
             JObject jObject = JObject.Parse(contactsInfoJson);
             var contactlist = jObject.SelectToken("payload").ToString();
 
             contactsList = JsonConvert.DeserializeObject<ContactsList[]>(contactlist);
             //return true;
+        }
+
+        /// <summary>
+        /// call bml api to get a list of contacts
+        /// </summary>
+        /// <returns>array of contacts</returns>
+        public static async Task<ContactsList[]> GetContacts()
+        {
+            HttpResponseMessage contactsInfoMessage = await httpClient.GetAsync(BaseURL + @"contacts");
+            string contactsInfoJson = await contactsInfoMessage.Content.ReadAsStringAsync();
+            JObject jObject = JObject.Parse(contactsInfoJson);
+            var contactlist = jObject.SelectToken("payload").ToString();
+
+            return JsonConvert.DeserializeObject<ContactsList[]>(contactlist);
         }
     }
 }

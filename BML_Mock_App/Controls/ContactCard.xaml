@@ -122,6 +122,7 @@
             <StackPanel>
                 <Label Style="{StaticResource ContactName}" Name="HolderName">name</Label>
                 <Label Style="{StaticResource AccountNumber}" Name="Account_Number">Account Number</Label>
+                <Button Click="Button_Click">Send 0.01</Button>
             </StackPanel>
         </Border>
     </Grid>

@@ -47,12 +47,16 @@
     <Compile Include="Activities.cs" />
     <Compile Include="Contacts.cs" />
     <Compile Include="Dashboard.cs" />
+    <Compile Include="Helpers\OTPChannel.cs" />
     <Compile Include="Helpers\ResponseCode.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="History.cs" />
     <Compile Include="Login.cs" />
+    <Compile Include="Models\StatementModel.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statics.cs" />
+    <Compile Include="Transfer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -58,8 +58,9 @@ namespace BML_Mock_App.Views
         private async void ShowDetailsAsync()
         {
             //MessageBox.Show("Welcome "+Lib_BML.Statics.UserData.FullName);
-            //await Lib_BML.Activities.GetActivities();
+            await Lib_BML.Activities.GetActivities();
             await Lib_BML.Dashboard.GetDashboard();
+            await Lib_BML.Contacts.GetContats();
             MainWindow.main.LoginDone = 1;
         }
     }
