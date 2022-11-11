@@ -9,6 +9,15 @@ the code is written in a way any dev can pick it up and forget about the backend
 
 # how to use
 
+before making any api calls to bml servers you have to set baseaddress
+this is done due to bml adding bot protection which blocks anyone without a bypass being able to access the api
+so enter your own bypass domain here to use the library
+```[C#]
+ Lib_BML.Statics.BaseURL = "https://bankwebsiteurl/";
+ ```
+
+basice usage
+
 ```[C#]
 private async void Button_Click(object sender, RoutedEventArgs e)
         {
