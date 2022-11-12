@@ -316,7 +316,7 @@ namespace Lib_BML
 
         public static async Task<(ResponseCode.Code, List<StatementModel.History>)> GetAccountHistory(string id, string startDate, string endDate, int page = 1)
         {
-            HttpResponseMessage accountHistoryInfoMessageInfoMessage = await httpClient.GetAsync(BaseURL + $@"account/{id}/{startDate}/{endDate}/{page}");
+            HttpResponseMessage accountHistoryInfoMessageInfoMessage = await httpClient.GetAsync(BaseURL + $@"account/{id}/history/{endDate}/{startDate}/{page}");
             string accountHistoryInfoJson = await accountHistoryInfoMessageInfoMessage.Content.ReadAsStringAsync();
             //quick and dirty hack to remove some items
             StatementModel response = JsonConvert.DeserializeObject<StatementModel>(accountHistoryInfoJson);
@@ -335,8 +335,8 @@ namespace Lib_BML
         }
 
         public static async Task<(ResponseCode.Code, List<StatementModel.History>)> GetFullHistory(string id,string startDate,string endDate)
-        {
-            HttpResponseMessage accountHistoryInfoMessageInfoMessage = await httpClient.GetAsync(BaseURL + $@"account/{id}/{startDate}/{endDate}/1");
+        {                                                                                                               
+            HttpResponseMessage accountHistoryInfoMessageInfoMessage = await httpClient.GetAsync(BaseURL + $@"account/{id}/history/{endDate}/{startDate}/1");
             string accountHistoryInfoJson = await accountHistoryInfoMessageInfoMessage.Content.ReadAsStringAsync();
             //quick and dirty hack to remove some items
             StatementModel response = JsonConvert.DeserializeObject<StatementModel>(accountHistoryInfoJson);
@@ -357,9 +357,11 @@ namespace Lib_BML
                     return (code, null);
                 }
 
-                Fullhistory = ListHelper.Concat(Fullhistory, history);
+                Fullhistory = ListHelper.Concat(history, Fullhistory);
 
             }
+
+          
 
             return (ResponseCode.Code.success, Fullhistory);
         }

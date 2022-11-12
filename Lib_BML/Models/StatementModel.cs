@@ -42,7 +42,7 @@ namespace Lib_BML.Models
             private DateTime bookingDate;
             private DateTime valueDate;
             private string currency;
-            private int amount;
+            private double amount;
             private double balance;
             private string narrative1;
             private string narrative2;
@@ -102,7 +102,7 @@ namespace Lib_BML.Models
                     currency = value; OnPropertyChanged();
                 }
             }
-            public int Amount
+            public double Amount
             {
                 get => amount;
                 set
